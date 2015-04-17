@@ -21,48 +21,49 @@ Troy Hildebrandt
 
 \section{Introduction}
 
-A programmer can generally tackle a problem in four fundamental ways:
-sequential, concurrent, parallel, and distributed. Sequential implementations
-are often easy to reason about and realize. However for many problems this
-sequential implementation has undesirable performance implications. For a
-single task with obvious sequential steps that can be immediately performed,
-sequential programming can indeed be optimal. However if multiple tasks need to
-be performed or steps require particular real-world resources (such as waiting
-time), sequential operation is suboptimal.
+A system can generally be implemented to run in four basic ways:
+sequentially, concurrently, in parallel, or distributed. 
 
-Concurrent programming involves allowing operations to logically occur in
+In a sequential system steps logically execute in a fixed order. Sequential
+systems have long dominated the programming landscape as easy to implement and
+reason about.  that dominate the programming landscape. However for many
+problems a sequential implementation has undesirable performance or design
+implications. If multiple tasks need to be performed, steps require particular
+real-world resources, or must grapple with the non-sequential nature of the real
+world, then sequential operation can be far from optimal.
+
+Concurrent programming involves allowing some operations to logically occur in
 arbitrary, potentially overlapping, order. For instance, it is generally
 desirable to be able to handle multiple TCP connections, even if one does not
 have the resources to actively perform work for them all. Even if only one
-connection is actually being worked on at a time, concurrency allows us to
-perform productive work \emph{more often} than sequential connection handling.
-If one connection is blocked on waiting for a response or system resource,
-another connection can be worked on. Concurrency can be implemented on top of a
-logically sequential system, though this limits the performance that can be
-realized. CPU-bound applications will see little to no benefit from such a
-system.
+connection is actually being worked on at a time, allowing each connection to be
+handled concurrently allows us to perform productive work \emph{more often} than
+sequential connection handling: if one connection is blocked on waiting for a
+response or system resource, another connection can be worked on. Concurrency
+can be implemented on top of a logically sequential system using time slicing,
+though this limits the performance that can be realized. CPU-bound applications
+will see little to no benefit from such a system.
 
 Parallel programming involves actually performing operations at the same time.
 Parallel programming is most easily enabled by concurrent programming. If a
-program is already concurrent, then multiple tasks can simply be driven forward
-at once. A sequential system can be built on top of a parallel system through
-synchronization mechanisms (simplifying reasoning while reducing the value of
-the parallel system), but a parallel system cannot be built on top of a
+program is already concurrent, then concurrent tasks can simply be driven
+forward at once. A sequential system can be built on top of a parallel system
+through synchronization mechanisms (simplifying reasoning while reducing the
+value of the parallel system), but a parallel system cannot be built on top of a
 sequential once.
 
 Distributed programming involves actually performing operations across several
-otherwise independent machines. This enables computation to be done at a
-greater scale than a single machine could ever hope to do with current
-technology. It also allows applications to be made robust against hardware
-failures, while ironically increasing the probability of such a failure.
-Single- machine applications can often ignore the consequences of hardware
-failures as unlikely or at worst properly handled by the underlying operating
-system. However the ultimate consequence of no longer running can itself be an
-unacceptable consequence.
+otherwise independent machines. This enables computation to be done at a greater
+scale than a single machine could ever hope to do with current technology. It
+also allows applications to be made robust against hardware failures, while
+ironically increasing the probability of such a failure. Single-machine
+applications can often ignore the consequences of hardware failures as unlikely
+or at worst properly handled by the underlying operating system. However the
+ultimate consequence of no longer running can itself be an unacceptable.
 
 Distributed computing can itself be decomposed into two sub-domains: cluster
 computing and global computing. The distinction largely being exactly how far
-apart the systems are. Clusters are co- located, enabling faster communication
+apart the systems are. Clusters are co-located, enabling faster communication
 and tighter control over the system. Global systems are distributed across the
 globe, increasing the cost of intra-communication while making the system more
 available to third parties and more robust to local disasters. For the purposes
@@ -71,19 +72,19 @@ of this work, these distinctions will not be particularly important.
 Most hardware, operating systems, and programming languages readily permit an
 obvious sequential implementation. In particular C was developed in a world of
 single-process, single-user, CPU-bound systems, and its highly sequential and
-computation-oriented nature reflects this. However modern hardware and
-operating systems are highly parallel and significantly more powerful.
-Applications are expected to serve millions of logically concurrent and IO-
-bound requests on datasets orders of magnitude larger than a single system
-could handle. These problems \necessitate} a distributed system. While it's not
-*impossible* to get C to efficiently handle these problems, it's certainly
-error-prone and difficult. For this reason we argue that C is simply
-\emph{inappropriate} for distributed systems.
+computation-oriented nature reflects this. However modern hardware and operating
+systems are highly parallel and significantly more powerful. Applications are
+expected to serve millions of logically concurrent and IO-bound requests on
+datasets orders of magnitude larger than a single system could handle. These
+problems \emph{necessitate} a distributed system. While it's not *impossible* to
+get C to efficiently handle these problems, it's certainly error-prone and
+difficult. For this reason we argue that C is simply \emph{inappropriate} for
+distributed systems.
 
-But C is \emph{the} systems programming language. It's only real competition is
-an increasingly complex pseudo-superset of itself. Therefore we are left asking
-what programming languages
-\emph{are} appropriate for distributed systems to be implemented in.
+But C is \emph{the} systems programming language. Its only real competition is
+an increasingly complex pseudo-superset of itself (C++). Therefore we are left
+asking what programming languages \emph{are} appropriate for distributed systems
+to be implemented in.
 
 This paper surveys the programming language literature for how different
 languages enable efficient and correct distributed systems to be more easily
@@ -93,7 +94,8 @@ When combined with an emphasis on message passing over shared state, tasks can
 then be made distributed without significant semantic changes over a single
 system deployment. In fact, one can deploy and debug a distributed system on a
 single machine accurately. However message passing alone is insufficient.
-Communication and task handling must be done in a fault-tolerant manner. Tasks cannot be assumed to receive a message or even consistently \emph{exist}.
+Communication and task handling must be done in a fault-tolerant manner. Tasks
+cannot be assumed to receive a message or even consistently \emph{exist}.
 
 \section{???}
 
