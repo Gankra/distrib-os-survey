@@ -115,6 +115,61 @@ cannot be assumed to receive a message or even consistently \emph{exist}.
 
 \section{Erlang}
 
+Erlang is a primarily functional language that was designed to solve the
+problems faced by the telecom industry. Telecom systems are expected to meet the
+following requirements \cite{dacker2000concurrent}:
+
+\begin{itemize}
+    \item The system must be able to handle very large numbers of concurrent activities.
+    \item Actions must be performed at a certain point in time or within a certain time.
+    \item Systems may be distributed over several computers.
+    \item The system is used to control hardware.
+    \item The software systems are very large.
+    \item The systems should be in continuous operation for many years.
+    \item Software maintenance (reconfiguration, etc) should be performed without stopping the system.
+    \item There are stringent quality, and reliability requirements.
+    \item Fault tolerance both to hardware failures, and software errors, must be provided.
+\end{itemize}
+
+Erlang's primary tool for handling these problems is its \emph{process} system.
+\cite{erlangthesis} An Erlang process is a lightweight task that is logically
+isolated from all other processes. They run concurrently, and can only
+communicate by passing messages to processes whose secret ids they know. An
+Erlang program is intended to be decomposed into many small processes. Further,
+processes may be broken up into a hierarchy of quality to be attempted in a
+best-effort manner. The hardest and best process is always preferred, but if
+that fails an easier but less-good process is tried instead. This helps ensure
+that even in face of hardware and software errors, the system is able to
+maintain some basic level of operation.
+
+The model of computation for \emph{individual} processes is that they're
+expected to try to do the right thing, but are considered unreliable. One should
+be prepared for tasks to experience an error or disappear completely at any
+time. Messages sent to a task cannot be assumed to be received; a response must
+be explicitly sent back to confirm that a message was sent and handled
+successfully. Erlang's processes system does its best to ensure that a flawed
+process cannot harm the execution of a correct process unless the correct one
+specifically opts into such a dependency.
+
+Processes can also have their code updated at runtime. This can be done fairly
+cleanly due to the functional nature of Erlang: loops are generally encoded as
+recursion, and so any code that is run is likely to be re-entered by a function
+call which can be redirected to the new version. It is otherwise the
+programmer's responsibility to ensure that new code is compatible with the old
+running code. \cite{erlangthesis}
+
+Erlang's processes enable it to reasonably meet all the requirements for a
+telecom system. As such it saw wide deployment at Ericsson and Nortel. It
+famously empowered the Ericsson AXD301 switching system to obtain 9 9's
+(99.9999999\%) of reliability on an 11 node deployment; effectively 0 down time.
+\cite{erlangthesis}
+
+%TODO: dig into concrete deployments more
+%TODO: dig into purity ("clean" vs "dirty" code)?
+%TODO: elaborate on "let it crash" model of computation?
+
+
+
 \section{Cloud Haskell}
 
 From Microsoft Research comes Cloud Haskell, an extension to the Haskell
@@ -140,6 +195,12 @@ result in the failure of another process.
 
 What Cloud Haskell introduces that Erlang doesn't is the fact that Cloud Haskell
 is built on Haskell, a purely functional programming language.
+
+
+
+\section{Ada}
+
+
 
 \section{Conclusion}
 
