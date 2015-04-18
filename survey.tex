@@ -172,9 +172,10 @@ famously empowered the Ericsson AXD301 switching system to obtain 9 9's
 
 \section{Cloud Haskell}
 
-From Microsoft Research comes Cloud Haskell, an extension to the Haskell
-programming language that attempts to solve many of the problems with creating
-distributed applications. XXX : More
+From Microsoft Research comes Cloud Haskell, a set of libaries that ease the
+creation of distributed applications wtih the Haskell programming language in
+an attempt to solve many of the problems with creating distributed applications.
+%TODO more.
 
 In any distributed system, there must be some level of communication between
 processes running on many different machines, and one of the most costly
@@ -193,10 +194,49 @@ data is shared, it is also possible to avoid the corruption or contamination of
 data in one process by another, ensuring that failure in one process does not
 result in the failure of another process.
 
-What Cloud Haskell introduces that Erlang doesn't is the fact that Cloud Haskell
-is built on Haskell, a purely functional programming language.
+Although Cloud Haskell provides message passing like that of Erlang, which in
+this case are referred to as \emph{untyped messages}, it also provides something
+unique known as \emph{typed channels}. Unliked untyped messages, which are sent
+directly using the process identifier, typed channels have a send and receive
+port. The receive port in this case will only accept messages of a certain type,
+which gives developers a guarantee that the function will only have to deal with
+messages of a type that it expects. The benefit to this is that, using Haskell's
+strong typing, one can ensure at development time that a message will be
+accepted by the receiving process, something that can't be determined until
+runtime using untyped messages.
 
+One of the things that makes Cloud Haskell unique is that it's is built on
+Haskell, a purely functional programming language. The purity of the functional
+programming model used by Haskell ensures that the data in applications written
+with it is immutable, and therefore there is no need for shared memory between
+functions. Another major benefit is reduction in complexity from the removal of
+the mutexes and semaphores required for thread and process data safety in
+traditional systems programming languages like C.
 
+Since Cloud Haskell is meant to be used for distributed systems, there is always
+the possibility that one or many of the machines that make up the system will
+fail at some point. The expectation, like with any distributed system, is that
+the system will be fault-tolerant enough to continue functioning. An additional
+benefit to the functional programming model and the lack of shared memory
+between functions is that since functions do computation in an isolated fashion,
+the only thing necessary in the event of a machine failure is to move the
+computation of that function to another machine and continue. In addition, since
+functional programming languages don't rely on maintaining shared state between
+functions as is prevalent in traditional procedural programming languages, there
+is no need to rewind spurious changes to state made by faulty computations from
+a failing machine.
+
+Cloud Haskell draws on concepts from Erlang for much of its inspiration, and
+fault-tolerance is one of them. Like Erlang, Cloud Haskell subscribes to the
+idea that if something is going wrong in a process it's best to just terminate
+it and start another one. Like Erlang, it provides a mechanism for processes to
+monitor each other, so that in the event that a process does fail, there's
+another process capable of terminating it and moving it. Like in Erlang, it is
+possible to link two processes to bidirectionally monitor themselves.
+
+%TODO where is it used?
+%TODO talk about how it's still very new, unfinished.
+%TODO citations.
 
 \section{Ada}
 
