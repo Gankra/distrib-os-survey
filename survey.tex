@@ -28,12 +28,12 @@ passing, and mechanisms for more transparently simulating shared memory. This
 simplifies fault-tolerance for synchronous access to data across multiple
 machines.
 
-We look at several languages and their respective extensions that enable
-distributed application development, including Erlang, Concurrent/Cloud Haskell,
-and Ada. For each, we examine their strengths and innovations, and assess their
-impact on distributed computing. The languages explored all provide unique
-solutions to some of distributed programming's toughest problems, in some cases
-using completely different programming paradigms.
+We look at programming languages and their respective extensions that enable
+distributed system development, such as Erlangand Cloud Haskell, as well as
+examining the difficulties of writing a distributed system using today's
+dominant systems programming language, C. For each of the distributed languages,
+we examine their strengths and innovations, and assess their impact on
+distributed computing.
 
 \section{Introduction}
 
@@ -74,8 +74,10 @@ scale than a single machine could ever hope to do with current technology. It
 also allows applications to be made robust against hardware failures, while
 ironically increasing the probability of such a failure. Single-machine
 applications can often ignore the consequences of hardware failures as unlikely
-or at worst properly handled by the underlying operating system. However the
-ultimate consequence of no longer running can itself be an unacceptable.
+or at worst properly handled by the underlying operating system. 
+% TODO: Not sure how this was supposed to end?
+% However the ultimate consequence of no longer running can itself be an
+% unacceptable.
 
 Distributed computing can itself be decomposed into two sub-domains: cluster
 computing and global computing. The distinction largely being exactly how far
@@ -274,10 +276,8 @@ parallel and concurrent programming is well over a decade old, distributed
 programming in it is still an extension to the original language through the use
 of libraries that build upon its current concurrency mechanisms. Cloud Haskell's
 contributions to distributed programming are still in their infancy in
-comparison to well established languages like Erlang, and as such isn't a
+comparison to well established languages like Erlang, and as such it isn't a
 popular choice at this point in time.
-
-\section{???}
 
 \section{C}
 
@@ -292,8 +292,8 @@ code does not inter-operate with distributed C code.
 
 Unfortunately this seems to be the case. Idiomatic C programs openly make use of
 shared memory and aliased mutation through pointers. Indeed, pointers are often
-the *cheapest* way to give a value to someone else. This poses a problem because
-pointers are of course completely nonsensical values between two independent
+the \emph{cheapest} way to give a value to someone else. This poses a problem
+because pointers are of course completely nonsensical values between two independent
 machines.
 
 Concert/C \cite{auerbach1994concert} is a superset of C that tries to handle
@@ -316,8 +316,8 @@ transfers clear through explicit message passing also means that the functional
 languages better communicate high cost operations. In Concert/C a normal-looking
 function call may be executed on a remote system transparently.
 
-C has a generally *trusted* model for computation. Hardware is assumed to be
-reliable and function calls are expected to correctly return a valid result.
+C has a generally \emph{trusted} model for computation. Hardware is assumed to
+be reliable and function calls are expected to correctly return a valid result.
 However this is no longer the case in the distributed context. Hardware is
 expected to fail and software might crash, but there is no way for a caller of a
 C function to see or handle this. Once again the explicit message-passing
@@ -329,8 +329,9 @@ single machine may involve lots of synchronization when distributed across
 multiple machines, and this may not be obvious to the programmer. Especially
 when linking against third-party code.
 
-
 \section{Conclusion}
+
+
 
 \addcontentsline{toc}{chapter}{References}
 \small
