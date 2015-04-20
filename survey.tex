@@ -38,7 +38,7 @@ using completely different programming paradigms.
 \section{Introduction}
 
 A system can generally be implemented to run in four basic ways:
-sequentially, concurrently, in parallel, or distributed. 
+sequentially, concurrently, in parallel, or distributed.
 
 In a sequential system steps logically execute in a fixed order. Sequential
 systems have long dominated the programming landscape as easy to implement and
@@ -148,10 +148,11 @@ following requirements \cite{dacker2000concurrent}:
 Erlang's primary tool for handling these problems is its \emph{process} system.
 \cite{erlangthesis} An Erlang process is a lightweight task that is logically
 isolated from all other processes. They run concurrently, and can only
-communicate by passing messages to processes whose secret ids they know. An
-Erlang program is intended to be decomposed into many small processes. Further,
-processes may be broken up into a hierarchy of quality to be attempted in a
-best-effort manner. The hardest and best process is always preferred, but if
+communicate by passing messages to processes whose secret ids they know.
+
+An Erlang program is intended to be decomposed into many small processes. Further,
+processes are often broken up into a hierarchy of service quality to be attempted in a
+best-effort manner. That is, the highest quality service is always preferred, but if
 that fails an easier but less-good process is tried instead. This helps ensure
 that even in face of hardware and software errors, the system is able to
 maintain some basic level of operation.
@@ -161,22 +162,29 @@ expected to try to do the right thing, but are considered unreliable. One should
 be prepared for tasks to experience an error or disappear completely at any
 time. Messages sent to a task cannot be assumed to be received; a response must
 be explicitly sent back to confirm that a message was sent and handled
-successfully. Erlang's processes system does its best to ensure that a flawed
-process cannot harm the execution of a correct process unless the correct one
-specifically opts into such a dependency.
+successfully.
+
+Erlang's processes system does its best to ensure that a flawed process cannot
+harm the execution of a correct process unless the correct one specifically opts
+into such a dependency. A process is expected to fail as soon as a problem is
+identified, rather than try to patch over the issue. Supervisor processes handle
+the administrative problem of how to handle problem. In this way developers are
+able to separate the business logic and the administrative logic.
+\cite{erlangADX}
 
 Processes can also have their code updated at runtime. This can be done fairly
 cleanly due to the functional nature of Erlang: loops are generally encoded as
 recursion, and so any code that is run is likely to be re-entered by a function
-call which can be redirected to the new version. It is otherwise the
-programmer's responsibility to ensure that new code is compatible with the old
-running code. \cite{erlangthesis}
+call which can be redirected to the new version without halting execution. It is
+otherwise the programmer's responsibility to ensure that new code is compatible
+with the old running code. \cite{erlangthesis}
 
 Erlang's processes enable it to reasonably meet all the requirements for a
-telecom system. As such it saw wide deployment at Ericsson and Nortel. It
-famously empowered the Ericsson AXD301 switching system to obtain 9 9's
-(99.9999999\%) of reliability on an 11 node deployment; effectively 0 down time.
-\cite{erlangthesis}
+telecom system. As such it saw wide deployment at Ericsson and Nortel. Notably
+Erlang provided the backbone of the Ericsson AXD301 switching system, whose
+developers reported a substantial improvement in productivity and reduction in
+bugs. \cite{erlangADX} One deployment of this system reported 9 9's
+(99.9999999\%) of reliability on an 11 node deployment. \cite{erlangthesis}
 
 %TODO: dig into concrete deployments more
 %TODO: dig into purity ("clean" vs "dirty" code)?
@@ -260,7 +268,7 @@ possible to link two processes to bidirectionally monitor themselves.
 
 Popular sequential languages such as C and C++ provide no built-in support for
 concurrent programming. Ada is a language that is actually designed to deal with
-concurrency natively, 
+concurrency natively,
 % Literature on Ada sucks it seems like.
 
 \section{Conclusion}
