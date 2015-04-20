@@ -113,18 +113,26 @@ single machine accurately. However message passing alone is insufficient.
 Communication and task handling must be done in a fault-tolerant manner. Tasks
 cannot be assumed to receive a message or even consistently \emph{exist}.
 
-%TODO discuss differences/similarities between parallel/concurrent/distributed?
-% Maybe in its own section?
+\section{Parallel, Concurrent, Distributed}
+The differences between parallel, concurrent, and distributed programming are
+subtle at times, and they all provide many of the same challenges. Parallel and
+concurrent programming are more similar in that they provide the ability to run
+multiple processes in unison on a single machine, and many current programming
+languages provide the ability to program both parallel and concurrent
+applications. Similar issues arise regardless of whether parallelism,
+concurrency, or a distributed system are desired. Developing software that
+breaks functionality into independently executable threads or tasks is often not
+trivial, and for any of the above programming models this is an absolute
+necessity.
 
-% Just some stuff I started writing that I felt is better suited for either
-% intro or its own section on the differences
-In concurrent programming for instance, the cost of information transfer between
-processes is minimal since the transfer is done locally, whereas in distributed
-programming this is much more expensive, and even potentially impossible due to
-network conditions. Distributed programming also has to deal with graceful
-failures as nodes go down in potentially distant locations, whereas there is no
-such thing as a partial failure in a concurrent programming environment. With
-concurrent programming, ..
+However, distributed programming brings with it several new difficulties that
+the single system programming models don't face. In concurrent programming for
+instance, the cost of information transfer between processes is minimal since
+the transfer is done locally, whereas in distributed programming this is much
+more expensive, and even potentially impossible due to network conditions.
+Distributed programming also has to deal with graceful failures as nodes go down
+in potentially distant locations, whereas there is no such thing as a partial
+failure in a concurrent programming environment. With concurrent programming, ..
 % MORE.
 
 \section{Erlang}
