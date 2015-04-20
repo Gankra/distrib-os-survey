@@ -74,10 +74,8 @@ scale than a single machine could ever hope to do with current technology. It
 also allows applications to be made robust against hardware failures, while
 ironically increasing the probability of such a failure. Single-machine
 applications can often ignore the consequences of hardware failures as unlikely
-or at worst properly handled by the underlying operating system. 
-% TODO: Not sure how this was supposed to end?
-% However the ultimate consequence of no longer running can itself be an
-% unacceptable.
+or at worst properly handled by the underlying operating system. However the
+ultimate consequence of no longer running can itself be an unacceptable.
 
 Distributed computing can itself be decomposed into two sub-domains: cluster
 computing and global computing. The distinction largely being exactly how far
@@ -331,7 +329,47 @@ when linking against third-party code.
 
 \section{Conclusion}
 
+Today's dominant systems programming languages, C and C++, were developed in a
+time where single-user, single-process applications were more than enough, and
+the sequential, procedural nature of the languages certainly reflects this.
+Although writing distributed applications in C/C++ is not impossible, the
+difficulties regarding interprocess communication and fault-tolerance in a
+language that doesn't inherently address these problems are numerous.
 
+Modern applications and services, such as those provided by Google and Facebook,
+require massive amounts of parallel computing power to serve large numbers of
+concurrent global users with information from incredibly large datasets. With
+the rise in popularity of distributed workloads such as this, and an ever
+increasing level of connectivity between machines at a global scale, the
+question of whether there exists a language that best embodies and enables the
+requirements of developing software for a distributed system becomes a pertinent
+one.
+
+Ericsson's mostly functional concurrent programming language Erlang served its
+purpose well by providing unprecedented uptimes in a distributed system, and
+remains the dominant force in distributed programming languages (cite facebook,
+rackspace, whatsapp). Several companies are currently using Erlang on incredibly
+large scale projects involving millions of users (cite facebook) and with great
+success.
+
+It should come as no surprise that commonalities exist between the languages
+surveyed. Many of Erlang's features, such as the message passing and process
+monitoring mechanisms, were born out of the basic requirements of building a
+distributed system that operates in an uncertain connected environment without
+shared memory, and as such the inclusion of incredibly similar mechanisms in
+Cloud Haskell seems obvious.
+
+Procedural, sequential languages such as C are not the answer to today's
+distributed programming challenges. The procedural programming paradigm in
+itself is ill-suited to handle parallel and distributed workloads. Erlang and
+Cloud Haskell both utilize a functional programming model, and this alone
+enables and even encourages the development of more highly parallelizable
+applications with greater fault-tolerance. While it is possible to develop
+distributed applications using traditional systems languages like C, the cost of
+doing so makes such a language an inappropriate choice. Progress has been made
+in the form of Erlang and Cloud Haskell, and as distributed systems continue to
+rise in popularity, so should the popularity of programming languages
+purpose-built for these systems.
 
 \addcontentsline{toc}{chapter}{References}
 \small
