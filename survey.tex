@@ -113,6 +113,20 @@ single machine accurately. However message passing alone is insufficient.
 Communication and task handling must be done in a fault-tolerant manner. Tasks
 cannot be assumed to receive a message or even consistently \emph{exist}.
 
+%TODO discuss differences/similarities between parallel/concurrent/distributed?
+% Maybe in its own section?
+
+% Just some stuff I started writing that I felt is better suited for either
+% intro or its own section on the differences
+In concurrent programming for instance, the cost of information transfer between
+processes is minimal since the transfer is done locally, whereas in distributed
+programming this is much more expensive, and even potentially impossible due to
+network conditions. Distributed programming also has to deal with graceful
+failures as nodes go down in potentially distant locations, whereas there is no
+such thing as a partial failure in a concurrent programming environment. With
+concurrent programming, ..
+% MORE.
+
 \section{Erlang}
 
 Erlang is a primarily functional language that was designed to solve the
@@ -168,14 +182,18 @@ famously empowered the Ericsson AXD301 switching system to obtain 9 9's
 %TODO: dig into purity ("clean" vs "dirty" code)?
 %TODO: elaborate on "let it crash" model of computation?
 
-
-
 \section{Cloud Haskell}
 
 From Microsoft Research comes Cloud Haskell, a set of libaries that ease the
 creation of distributed applications wtih the Haskell programming language in
 an attempt to solve many of the problems with creating distributed applications.
-%TODO more.
+Although Haskell provides the necessary tools to develop parallel and concurrent
+applications natively, distributed programming has its own set of requirements
+and challenges that it isn't equipped to handle. Cloud Haskell provides a
+collection of facilities to deal with the issues surrounding the interprocess
+communication difficulties of a multi-node system communicating over a
+network, and graceful failure resolution behaviour for partial faillures due
+to node outages that don't occur in single system environments.
 
 In any distributed system, there must be some level of communication between
 processes running on many different machines, and one of the most costly
@@ -220,11 +238,11 @@ the system will be fault-tolerant enough to continue functioning. An additional
 benefit to the functional programming model and the lack of shared memory
 between functions is that since functions do computation in an isolated fashion,
 the only thing necessary in the event of a machine failure is to move the
-computation of that function to another machine and continue. In addition, since
-functional programming languages don't rely on maintaining shared state between
-functions as is prevalent in traditional procedural programming languages, there
-is no need to rewind spurious changes to state made by faulty computations from
-a failing machine.
+computation of that function to another machine and continue. Since functional
+programming languages don't rely on maintaining shared state between functions
+as is prevalent in traditional procedural programming languages, there is no
+need to rewind spurious changes to state made by faulty computations from a
+failing machine.
 
 Cloud Haskell draws on concepts from Erlang for much of its inspiration, and
 fault-tolerance is one of them. Like Erlang, Cloud Haskell subscribes to the
@@ -240,7 +258,10 @@ possible to link two processes to bidirectionally monitor themselves.
 
 \section{Ada}
 
-
+Popular sequential languages such as C and C++ provide no built-in support for
+concurrent programming. Ada is a language that is actually designed to deal with
+concurrency natively, 
+% Literature on Ada sucks it seems like.
 
 \section{Conclusion}
 
