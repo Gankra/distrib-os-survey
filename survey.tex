@@ -282,17 +282,53 @@ concurrency natively,
 
 \section{C}
 
-C is the dominant language in non-distributed systems programming. The Windows, Linux, and OSX kernels are all written in C, and this is unlikely to ever change. As such, it seems natural to consider C (and close derivatives like C++) for the distributed systems. Part of the value of C is the massive preexisting code- and knowledge-base surrounding it. If getting C to work with distributed systems requires programming in a completely different way, then these advantages cannot be effectively leveraged. Especially if it means that legacy C code does not inter-operate with distributed C code.
+C is the dominant language in non-distributed systems programming. The Windows,
+Linux, and OSX kernels are all written in C, and this is unlikely to ever
+change. As such, it seems natural to consider C (and close derivatives like C++)
+for the distributed systems. Part of the value of C is the massive preexisting
+code- and knowledge-base surrounding it. If getting C to work with distributed
+systems requires programming in a completely different way, then these
+advantages cannot be effectively leveraged. Especially if it means that legacy C
+code does not inter-operate with distributed C code.
 
-Unfortunately this seems to be the case. Idiomatic C programs openly make use of shared memory and aliased mutation through pointers. Indeed, pointers are often the *cheapest* way to give a value to someone else. This poses a problem because pointers are of course completely nonsensical values between two independent machines.
+Unfortunately this seems to be the case. Idiomatic C programs openly make use of
+shared memory and aliased mutation through pointers. Indeed, pointers are often
+the *cheapest* way to give a value to someone else. This poses a problem because
+pointers are of course completely nonsensical values between two independent
+machines.
 
-Concert/C \cite{auerbach1994concert} is a superset of C that tries to handle this problem. When a value that contains a pointer is passed to another system, it performs a *deep* copy of the value through all of the pointers. This proves problematic for two reasons. First, this forms a mismatch between traditional C programming and distributed C programming: passing and composing pointers is normally super cheap, but in Concert/C is potentially incredibly expensive. Second, substantial annotations are required by the programmer to identify substantial details about the semantics of the pointers being copied. Whether pointers are nullable or aliasable, who owns the data, and whether it's an array and how long it is are all details that the programmer must be able to tell Concert/C about that otherwise wouldn't be necessary in normal C.
+Concert/C \cite{auerbach1994concert} is a superset of C that tries to handle
+this problem. When a value that contains a pointer is passed to another system,
+it performs a *deep* copy of the value through all of the pointers. This proves
+problematic for two reasons. First, this forms a mismatch between traditional C
+programming and distributed C programming: passing and composing pointers is
+normally super cheap, but in Concert/C is potentially incredibly expensive.
+Second, substantial annotations are required by the programmer to identify
+substantial details about the semantics of the pointers being copied. Whether
+pointers are nullable or aliasable, who owns the data, and whether it's an array
+and how long it is are all details that the programmer must be able to tell
+Concert/C about that otherwise wouldn't be necessary in normal C.
 
-The functional languages we surveyed avoid the annotation problems largely due to pervasive garbage collection and immutability. The runtime either already knows the answer to these questions or renders the answer irrelevant (ownership and aliasing is irrelevant for immutable garbage-collected data). Making transfers clear through explicit message passing also means that the functional languages better communicate high cost operations. In Concert/C a normal-looking function call may be executed on a remote system transparently.
+The functional languages we surveyed avoid the annotation problems largely due
+to pervasive garbage collection and immutability. The runtime either already
+knows the answer to these questions or renders the answer irrelevant (ownership
+and aliasing is irrelevant for immutable garbage-collected data). Making
+transfers clear through explicit message passing also means that the functional
+languages better communicate high cost operations. In Concert/C a normal-looking
+function call may be executed on a remote system transparently.
 
-C has a generally *trusted* model for computation. Hardware is assumed to be reliable and function calls are expected to correctly return a valid result. However this is no longer the case in the distributed context. Hardware is expected to fail and software might crash, but there is no way for a caller of a C function to see or handle this. Once again the explicit message-passing boundary in the functional languages makes this clear.
+C has a generally *trusted* model for computation. Hardware is assumed to be
+reliable and function calls are expected to correctly return a valid result.
+However this is no longer the case in the distributed context. Hardware is
+expected to fail and software might crash, but there is no way for a caller of a
+C function to see or handle this. Once again the explicit message-passing
+boundary in the functional languages makes this clear.
 
-The pervasive shared mutability and state may also be hidden through globals or deeply nested pointers. Operations which seem simple and behave efficiently on a single machine may involve lots of synchronization when distributed across multiple machines, and this may not be obvious to the programmer. Especially when linking against third-party code.
+The pervasive shared mutability and state may also be hidden through globals or
+deeply nested pointers. Operations which seem simple and behave efficiently on a
+single machine may involve lots of synchronization when distributed across
+multiple machines, and this may not be obvious to the programmer. Especially
+when linking against third-party code.
 
 
 \section{Conclusion}
