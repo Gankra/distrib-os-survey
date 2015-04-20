@@ -29,8 +29,8 @@ simplifies fault-tolerance for synchronous access to data across multiple
 machines.
 
 We look at programming languages and their respective extensions that enable
-distributed system development, such as Erlangand Cloud Haskell, as well as
-examining the difficulties of writing a distributed system using today's
+distributed system development, such as Erlang and Cloud Haskell, as well as
+the difficulties of writing a distributed system using today's
 dominant systems programming language, C. For each of the distributed languages,
 we examine their strengths and innovations, and assess their impact on
 distributed computing.
@@ -74,10 +74,10 @@ scale than a single machine could ever hope to do with current technology. It
 also allows applications to be made robust against hardware failures, while
 ironically increasing the probability of such a failure. Single-machine
 applications can often ignore the consequences of hardware failures as unlikely
-or at worst properly handled by the underlying operating system. 
-% TODO: Not sure how this was supposed to end?
-% However the ultimate consequence of no longer running can itself be an
-% unacceptable.
+or at worst properly handled by the underlying operating system. However this
+generally involves ignoring the ultimate consequence of not running at all. The
+OS may allow your application to die gracefully, but not running at all can be
+just as bad as any runtime issue. Particularly for critical services.
 
 Distributed computing can itself be decomposed into two sub-domains: cluster
 computing and global computing. The distinction largely being exactly how far
@@ -196,9 +196,9 @@ bugs. \cite{erlangADX} One deployment of this system reported 9 9's
 (99.9999999\%) of reliability on an 11 node deployment. \cite{erlangthesis}
 
 In the same vein as Java and unlike C, Erlang is built to abstract away many of
-the implementation details of hardware. This enables Erlang applications and
-libraries to be ported and distributed to heterogeneous hardware with little
-fuss or muss. \cite{erlangthesis}
+the implementation details of hardware and the operating system. This enables
+Erlang applications and libraries to be ported and distributed to heterogeneous
+hardware with little fuss or muss. \cite{erlangthesis}
 
 \section{Cloud Haskell}
 
@@ -210,7 +210,7 @@ applications natively, distributed programming has its own set of requirements
 and challenges that it isn't equipped to handle. Cloud Haskell provides a
 collection of facilities to deal with the issues surrounding the interprocess
 communication difficulties of a multi-node system communicating over a network,
-and graceful failure resolution behaviour for partial faillures due to node
+and graceful failure resolution behaviour for partial failures due to node
 outages that don't occur in single system environments.
 
 In any distributed system, there must be some level of communication between
