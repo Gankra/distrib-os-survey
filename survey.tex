@@ -126,14 +126,13 @@ trivial, and for any of the above programming models this is an absolute
 necessity.
 
 However, distributed programming brings with it several new difficulties that
-the single system programming models don't face. In concurrent programming for
-instance, the cost of information transfer between processes is minimal since
-the transfer is done locally, whereas in distributed programming this is much
-more expensive, and even potentially impossible due to network conditions.
-Distributed programming also has to deal with graceful failures as nodes go down
-in potentially distant locations, whereas there is no such thing as a partial
-failure in a concurrent programming environment. With concurrent programming, ..
-% MORE.
+the single system programming models simply don't face. In concurrent
+programming for instance, the cost of information transfer between processes is
+minimal since the transfer is done locally, whereas in distributed programming
+this is much more expensive, and even potentially impossible due to network
+conditions. Distributed programming also has to deal with graceful failures as
+nodes go down in potentially distant locations, whereas there is no such thing
+as a partial failure in a parallel or concurrent programming environment.
 
 \section{Erlang}
 
@@ -201,16 +200,16 @@ fuss or muss. \cite{erlangthesis}
 
 \section{Cloud Haskell}
 
-From Microsoft Research comes Cloud Haskell, a set of libaries that ease the
-creation of distributed applications wtih the Haskell programming language in
-an attempt to solve many of the problems with creating distributed applications.
+From Microsoft Research comes Cloud Haskell, a set of libraries that ease the
+creation of distributed applications with the Haskell programming language in an
+attempt to solve many of the problems with creating distributed applications.
 Although Haskell provides the necessary tools to develop parallel and concurrent
 applications natively, distributed programming has its own set of requirements
 and challenges that it isn't equipped to handle. Cloud Haskell provides a
 collection of facilities to deal with the issues surrounding the interprocess
-communication difficulties of a multi-node system communicating over a
-network, and graceful failure resolution behaviour for partial faillures due
-to node outages that don't occur in single system environments.
+communication difficulties of a multi-node system communicating over a network,
+and graceful failure resolution behaviour for partial faillures due to node
+outages that don't occur in single system environments.
 
 In any distributed system, there must be some level of communication between
 processes running on many different machines, and one of the most costly
@@ -268,17 +267,17 @@ it and start another one. Like Erlang, it provides a mechanism for processes to
 monitor each other, so that in the event that a process does fail, there's
 another process capable of terminating it and moving it. Like in Erlang, it is
 possible to link two processes to bidirectionally monitor themselves.
+\cite{cloudhaskell}
 
-%TODO where is it used?
-%TODO talk about how it's still very new, unfinished.
-%TODO citations.
+While Haskell is a mature language in its own right, and its native support for
+parallel and concurrent programming is well over a decade old, distributed
+programming in it is still an extension to the original language through the use
+of libraries that build upon its current concurrency mechanisms. Cloud Haskell's
+contributions to distributed programming are still in their infancy in
+comparison to well established languages like Erlang, and as such isn't a
+popular choice at this point in time.
 
-\section{Ada}
-
-Popular sequential languages such as C and C++ provide no built-in support for
-concurrent programming. Ada is a language that is actually designed to deal with
-concurrency natively,
-% Literature on Ada sucks it seems like.
+\section{???}
 
 \section{C}
 
@@ -332,10 +331,6 @@ when linking against third-party code.
 
 
 \section{Conclusion}
-
-
-
-
 
 \addcontentsline{toc}{chapter}{References}
 \small
